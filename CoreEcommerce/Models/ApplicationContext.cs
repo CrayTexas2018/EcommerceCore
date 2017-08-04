@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace CoreEcommerce.Models
 {
-    public class AppContext : DbContext
+    public class ApplicationContext : DbContext
     {
+        public ApplicationContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
+        public ApplicationContext()
+        {
+
+        }
+
         public DbSet<User> Users { get; set; }
     }
 }

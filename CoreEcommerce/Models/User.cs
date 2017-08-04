@@ -98,7 +98,7 @@ namespace CoreEcommerce.Models
         public int prospectId { get; set; }
     }
 
-    interface IUserRepository
+    public interface IUserRepository
     {
         IEnumerable<User> GetUsers();
         User GetUserByID(int id);
@@ -111,9 +111,9 @@ namespace CoreEcommerce.Models
 
     public class UserRepository : IUserRepository, IDisposable
     {
-        private AppContext context;
+        private ApplicationContext context;
 
-        public UserRepository (AppContext context)
+        public UserRepository (ApplicationContext context)
         {
             this.context = context;
         }
