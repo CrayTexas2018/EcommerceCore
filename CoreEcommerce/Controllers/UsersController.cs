@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CoreEcommerce.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreEcommerce.Controllers
 {
@@ -12,16 +13,13 @@ namespace CoreEcommerce.Controllers
     [Route("api/Users")]
     public class UsersController : Controller
     {
-        private IUserRepository userRepository;
+        private ApplicationContext context;
+        private IUserRepository userRepository;        
 
-        public UsersController()
+        public UsersController(ApplicationContext context)
         {
-            this.userRepository = new UserRepository(new ApplicationContext());
-        }
-
-        public UsersController(IUserRepository userRepository)
-        {
-            this.userRepository = userRepository;
+            this.userRepository = new UserRepository(context);
+            this.context = context;
         }
 
         // GET: api/Users
