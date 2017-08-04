@@ -142,6 +142,7 @@ namespace CoreEcommerce.Models
         public void CreateUser(User user)
         {
             context.Users.Add(user);
+            Save();
         }
 
         public void Save()
