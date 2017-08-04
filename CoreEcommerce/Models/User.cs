@@ -109,7 +109,7 @@ namespace CoreEcommerce.Models
         void Save();
     }
 
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository, IDisposable
     {
         private AppContext context;
 
@@ -152,6 +152,26 @@ namespace CoreEcommerce.Models
         public void UpdateUser(User user)
         {
             context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
