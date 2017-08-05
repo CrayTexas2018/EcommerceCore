@@ -27,21 +27,21 @@ namespace CoreEcommerce.Controllers
         }
 
         // GET: api/Users
-        [HttpGet]
+        [HttpGet(Name = "GetUsers")]
         public IEnumerable<User> Get()
         {
             return userRepository.GetUsers();
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetUsersID")]
         public User Get(int id)
         {
             return userRepository.GetUserByID(id);
         }
 
         // POST: api/Users
-        [HttpPost]
+        [HttpPost(Name = "PostUsers")]
         public ActionResult Post([FromBody]User user)
         {
             if (ModelState.IsValid)
@@ -53,20 +53,20 @@ namespace CoreEcommerce.Controllers
         }
 
         // PUT: api/Users
-        [HttpPut]
+        [HttpPut(Name = "PutUsers")]
         public void Put([FromBody]User user)
         {
             userRepository.UpdateUser(user);
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = "DeleteUser")]
         public void Delete(int id)
         {
             userRepository.DeleteUser(id);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "AuthUser")]
         [Route("Auth")]
         public bool Auth([FromQuery] string email, [FromQuery] string password)
         {
