@@ -166,12 +166,14 @@ namespace CoreEcommerce.Models
 
         public bool Authenticate (string email, string password)
         {
-            if (email == null || password == null)
+            try
+            {
+                string correctPassword = context.Users.Where(u => u.email == email).Select(u => u.password).FirstOrDefault();
+                return (BCrypt.Net.BCrypt.Verify(password, correctPassword));
+            } catch
             {
                 return false;
-            }
-            string correctPassword = context.Users.Where(u => u.email == email).Select(u => u.password).FirstOrDefault();
-            return (BCrypt.Net.BCrypt.Verify(password, correctPassword));
+            }            
         }
 
         private bool disposed = false;
