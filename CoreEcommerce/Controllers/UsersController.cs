@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Text;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreEcommerce.Controllers
 {
@@ -17,7 +18,7 @@ namespace CoreEcommerce.Controllers
     public class UsersController : Controller
     {
         private ApplicationContext context;
-        private IUserRepository userRepository;        
+        private IUserRepository userRepository;
 
         public UsersController(ApplicationContext context)
         {
@@ -38,12 +39,11 @@ namespace CoreEcommerce.Controllers
         {
             return userRepository.GetUserByID(id);
         }
-        
+
         // POST: api/Users
         [HttpPost]
         public ActionResult Post([FromBody]User user)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
             if (ModelState.IsValid)
             {
                 user = userRepository.CreateUser(user);
@@ -51,19 +51,26 @@ namespace CoreEcommerce.Controllers
             }
             return BadRequest(ModelState.Select(x => x.Value.Errors.ToList()));
         }
-        
+
         // PUT: api/Users
         [HttpPut]
         public void Put([FromBody]User user)
         {
             userRepository.UpdateUser(user);
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
             userRepository.DeleteUser(id);
+        }
+
+        [HttpPost]
+        [Route("Auth")]
+        public bool Auth([FromQuery] string email, [FromQuery] string password)
+        {
+            return userRepository.Authenticate(email, password);
         }
     }
 }

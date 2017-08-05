@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace CoreEcommerce.Models
         [Required(ErrorMessage = "Email is required.")]
         [StringLength(96, ErrorMessage ="Email cannot be longer than 96 characters.")]
         public string email { get; set; }
+
+        [StringLength(255, ErrorMessage = "Password cannot be longer than 255 characters.")]
+        public string password { get; set; }
 
         [StringLength(64, ErrorMessage = "First name cannot be longer than 64 characters.")]
         public string firstName { get; set; }
@@ -106,6 +110,7 @@ namespace CoreEcommerce.Models
         User CreateUser(User user);
         void DeleteUser(int userId);
         void UpdateUser(User user);
+        bool Authenticate(string email, string password);
         void Save();
     }
 
@@ -142,6 +147,7 @@ namespace CoreEcommerce.Models
 
         public User CreateUser(User user)
         {
+            user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
             context.Users.Add(user);
             Save();
             return user;
@@ -156,6 +162,12 @@ namespace CoreEcommerce.Models
         {
             context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             Save();
+        }
+
+        public bool Authenticate (string email, string password)
+        {
+            string correctPassword = context.Users.Where(u => u.email == email).Select(u => u.password).FirstOrDefault();
+            return (BCrypt.Net.BCrypt.Verify(password, correctPassword));
         }
 
         private bool disposed = false;
