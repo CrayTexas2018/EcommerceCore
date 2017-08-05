@@ -13,6 +13,8 @@ namespace CoreEcommerce.Models
 
         public string name { get; set; }
 
+        public List<Employee> employees { get; set; }
+
         public DateTime created { get; set; }
 
         public DateTime updated { get; set; }

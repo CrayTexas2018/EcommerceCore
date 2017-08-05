@@ -12,6 +12,7 @@ namespace CoreEcommerce.Models
         public DbSet<LogRequest> Requests { get; set; }
         public DbSet<LogResponse> Responses { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         public ApplicationContext(DbContextOptions options) : base(options)
         {
