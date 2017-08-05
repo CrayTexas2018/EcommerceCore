@@ -8,9 +8,10 @@ using CoreEcommerce.Models;
 namespace CoreEcommerce.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20170805045012_AddRequestAndCompanyCorrect")]
+    partial class AddRequestAndCompanyCorrect
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -39,13 +40,21 @@ namespace CoreEcommerce.Migrations
 
                     b.Property<string>("body");
 
-                    b.Property<DateTime>("created");
+                    b.Property<int?>("companyId");
+
+                    b.Property<string>("created");
 
                     b.Property<string>("method");
 
                     b.Property<string>("url");
 
+                    b.Property<int?>("userId");
+
                     b.HasKey("id");
+
+                    b.HasIndex("companyId");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("Requests");
                 });
@@ -145,6 +154,17 @@ namespace CoreEcommerce.Migrations
                     b.HasKey("userId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CoreEcommerce.Models.Request", b =>
+                {
+                    b.HasOne("CoreEcommerce.Models.Company", "company")
+                        .WithMany()
+                        .HasForeignKey("companyId");
+
+                    b.HasOne("CoreEcommerce.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
                 });
         }
     }

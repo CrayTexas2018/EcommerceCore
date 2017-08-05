@@ -8,47 +8,14 @@ using CoreEcommerce.Models;
 namespace CoreEcommerce.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20170805044606_createRequestandCompany")]
+    partial class createRequestandCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CoreEcommerce.Models.Company", b =>
-                {
-                    b.Property<int>("companyId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("created");
-
-                    b.Property<string>("name");
-
-                    b.Property<DateTime>("updated");
-
-                    b.HasKey("companyId");
-
-                    b.ToTable("Companies");
-                });
-
-            modelBuilder.Entity("CoreEcommerce.Models.Request", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("body");
-
-                    b.Property<DateTime>("created");
-
-                    b.Property<string>("method");
-
-                    b.Property<string>("url");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Requests");
-                });
 
             modelBuilder.Entity("CoreEcommerce.Models.User", b =>
                 {

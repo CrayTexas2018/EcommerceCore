@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using CoreEcommerce.Models;
+using CoreEcommerce.Middleware;
 
 namespace CoreEcommerce
 {
@@ -43,6 +44,8 @@ namespace CoreEcommerce
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseMiddleware<LogRequestMiddleware>();
 
             app.UseMvc();
         }

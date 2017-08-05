@@ -8,9 +8,10 @@ using CoreEcommerce.Models;
 namespace CoreEcommerce.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20170805192656_remove company and user from request model")]
+    partial class removecompanyanduserfromrequestmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -39,7 +40,7 @@ namespace CoreEcommerce.Migrations
 
                     b.Property<string>("body");
 
-                    b.Property<DateTime>("created");
+                    b.Property<string>("created");
 
                     b.Property<string>("method");
 
