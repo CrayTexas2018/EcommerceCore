@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CoreEcommerce.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Text;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace CoreEcommerce.Controllers
 {
@@ -38,9 +41,15 @@ namespace CoreEcommerce.Controllers
         
         // POST: api/Users
         [HttpPost]
-        public void Post([FromBody]User user)
+        public ActionResult Post([FromBody]User user)
         {
-            userRepository.CreateUser(user);
+            HttpResponseMessage response = new HttpResponseMessage();
+            if (ModelState.IsValid)
+            {
+                user = userRepository.CreateUser(user);
+                return Created(new Uri(Request.GetDisplayUrl() + "/" + user.userId), user);
+            }
+            return BadRequest(ModelState.Select(x => x.Value.Errors.ToList()));
         }
         
         // PUT: api/Users/5

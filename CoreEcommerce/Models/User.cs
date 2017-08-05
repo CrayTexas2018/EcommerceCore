@@ -103,7 +103,7 @@ namespace CoreEcommerce.Models
         IEnumerable<User> GetUsers();
         User GetUserByID(int id);
         User GetUserByEmail(string email);
-        void CreateUser(User user);
+        User CreateUser(User user);
         void DeleteUser(int userId);
         void UpdateUser(User user);
         void Save();
@@ -139,10 +139,11 @@ namespace CoreEcommerce.Models
             return context.Users.ToList();
         }
 
-        public void CreateUser(User user)
+        public User CreateUser(User user)
         {
             context.Users.Add(user);
             Save();
+            return user;
         }
 
         public void Save()
@@ -153,6 +154,7 @@ namespace CoreEcommerce.Models
         public void UpdateUser(User user)
         {
             context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            Save();
         }
 
         private bool disposed = false;
