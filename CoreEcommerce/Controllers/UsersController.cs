@@ -52,9 +52,9 @@ namespace CoreEcommerce.Controllers
             return BadRequest(ModelState.Select(x => x.Value.Errors.ToList()));
         }
         
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public void Put(User user)
+        // PUT: api/Users
+        [HttpPut]
+        public void Put([FromBody]User user)
         {
             userRepository.UpdateUser(user);
         }

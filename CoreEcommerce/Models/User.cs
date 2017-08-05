@@ -122,6 +122,7 @@ namespace CoreEcommerce.Models
         {
             User user = context.Users.Find(userId);
             context.Users.Remove(user);
+            Save();
         }
 
         public User GetUserByEmail(string email)
