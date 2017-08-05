@@ -46,6 +46,7 @@ namespace CoreEcommerce
             loggerFactory.AddDebug();
 
             app.UseMiddleware<LogRequestMiddleware>();
+            app.UseMiddleware<LogResponseMiddleware>();
 
             app.UseMvc();
         }
