@@ -31,7 +31,7 @@ namespace CoreEcommerce.Models
 
         public bool subscription { get; set; }
 
-        public Product recurringProduct { get; set; }
+        public int recurringProductId { get; set; }
 
         public bool shipping { get; set; }
 
@@ -48,6 +48,12 @@ namespace CoreEcommerce.Models
         public DateTime created { get; set; }
 
         public DateTime updated { get; set; }
+
+        public Product()
+        {
+            created = DateTime.UtcNow;
+            updated = DateTime.UtcNow;
+        }
     }
 
     public interface IProductRepository
@@ -81,8 +87,6 @@ namespace CoreEcommerce.Models
 
         public Product CreateProduct (Product product)
         {
-            product.created = DateTime.UtcNow;
-            product.active = false;
             context.Products.Add(product);
             Save();
             return product;

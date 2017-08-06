@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CoreEcommerce.Models;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace CoreEcommerce.Controllers
 {
@@ -30,27 +31,35 @@ namespace CoreEcommerce.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}", Name = "GetProductsID")]
-        public string Get(int id)
+        public Product Get(int id)
         {
-            return "value";
+            return productRepository.GetProductByID(id);
         }
         
         // POST: api/Products
         [HttpPost(Name = "PostProducts")]
-        public void Post([FromBody]string value)
+        public ActionResult Post([FromBody]Product product)
         {
+            if (ModelState.IsValid)
+            {
+                product = productRepository.CreateProduct(product);
+                return Created(new Uri(Request.GetDisplayUrl() + "/" + product.productId), product);
+            }
+            return BadRequest(ModelState.Select(x => x.Value.Errors.ToList()));
         }
         
         // PUT: api/Products/5
-        [HttpPut("{id}", Name = "PutProducts")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut(Name = "PutProducts")]
+        public void Put([FromBody]Product product)
         {
+            productRepository.UpdateProduct(product);
         }
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}", Name = "DeleteProducts")]
         public void Delete(int id)
         {
+            productRepository.DeleteProduct(id);
         }
     }
 }

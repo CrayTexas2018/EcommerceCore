@@ -45,8 +45,8 @@ namespace CoreEcommerce
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            //app.UseMiddleware<LogRequestMiddleware>();
-            //app.UseMiddleware<LogResponseMiddleware>();
+            // app.UseMiddleware<LogRequestMiddleware>();
+            // app.UseMiddleware<LogResponseMiddleware>();
 
             app.UseMvc();
         }
